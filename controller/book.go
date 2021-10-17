@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/gorilla/mux"
+	"github.com/go-chi/chi/v5"
 	"github.com/vSterlin/bookstore/service"
 )
 
@@ -21,7 +21,7 @@ func (bc *BookController) GetBooks(w http.ResponseWriter, r *http.Request) {
 
 func (bc *BookController) GetBook(w http.ResponseWriter, r *http.Request) {
 
-	id, err := strconv.Atoi(mux.Vars(r)["id"])
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 
 	if err != nil {
 		fmt.Println("provide valid id")
@@ -34,7 +34,7 @@ func (bc *BookController) GetBook(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (bc *BookController) InsertBooks(w http.ResponseWriter, r *http.Request) {
+func (bc *BookController) InsertBook(w http.ResponseWriter, r *http.Request) {
 }
 
 func (bc *BookController) DeleteBook(w http.ResponseWriter, r *http.Request) {
