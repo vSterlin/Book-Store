@@ -1,8 +1,9 @@
-package server
+package apiserver
 
 import (
 	"database/sql"
 	"net/http"
+	"strconv"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -16,8 +17,11 @@ type Server struct {
 	db   *sql.DB
 }
 
-func NewServer(addr string, db *sql.DB) *Server {
-	return &Server{addr: ":8080", db: db}
+func NewServer(addr int, db *sql.DB) *Server {
+
+	strAddr := strconv.Itoa(addr)
+
+	return &Server{addr: strAddr, db: db}
 }
 
 func (s *Server) Init() {
@@ -35,9 +39,10 @@ func (s *Server) Init() {
 		r.Get("/{id}", bc.GetBook)
 	})
 
-	http.ListenAndServe(s.addr, r)
+	http.ListenAndServe(":"+s.addr, r)
 }
 
 func (s *Server) Shutdown() {
 	s.db.Close()
+
 }

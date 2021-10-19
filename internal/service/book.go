@@ -6,10 +6,10 @@ import (
 )
 
 type BookService struct {
-	br *repository.BookRepo
+	br repository.Repo
 }
 
-func NewBookService(br *repository.BookRepo) *BookService {
+func NewBookService(br repository.Repo) *BookService {
 	return &BookService{br: br}
 }
 

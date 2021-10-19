@@ -11,6 +11,10 @@ const (
 	GetOneSQL  = "SELECT id, title, author, pages, publish_date FROM books WHERE id = $1;"
 )
 
+type Repo interface {
+	GetMany() []*entity.Book
+	GetOne(id int) *entity.Book
+}
 type BookRepo struct {
 	db *sql.DB
 }
