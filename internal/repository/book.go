@@ -20,7 +20,7 @@ func NewBookRepo(db *sql.DB) *BookRepo {
 
 func (br *BookRepo) GetMany() []*entity.Book {
 
-	rows, _ := br.db.Query("SELECT id, title, author, pages, publish_date  FROM books")
+	rows, _ := br.db.Query("SELECT id, title, author, pages, publish_date  FROM books;")
 	books := []*entity.Book{}
 
 	for rows.Next() {
@@ -33,13 +33,7 @@ func (br *BookRepo) GetMany() []*entity.Book {
 }
 
 func (br *BookRepo) GetOne(id int) *entity.Book {
-	return books[id-1]
-}
-
-func (br *BookRepo) InsertOne(book *entity.Book) {
-	books = append(books, book)
-}
-
-func (br *BookRepo) RemoveOne(id int) {
-	//TODO
+	book := &entity.Book{}
+	br.db.QueryRow("SELECT id, title, author, pages, publish_date FROM books WHERE id = $1;", id).Scan(&book.Id, &book.Title, &book.Author, &book.Pages, &book.PublishDate)
+	return book
 }

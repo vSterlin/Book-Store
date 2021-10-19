@@ -20,11 +20,3 @@ func (bs *BookService) GetMany() []*entity.Book {
 func (bs *BookService) GetOne(id int) *entity.Book {
 	return bs.br.GetOne(id)
 }
-
-func (bs *BookService) InsertOne(book *entity.Book) {
-	bs.br.InsertOne(book)
-}
-
-func (bs *BookService) RemoveOne(id int) {
-	//TODO
-}

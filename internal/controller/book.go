@@ -37,9 +37,3 @@ func (bc *BookController) GetBook(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(book)
 
 }
-
-func (bc *BookController) InsertBook(w http.ResponseWriter, r *http.Request) {
-}
-
-func (bc *BookController) DeleteBook(w http.ResponseWriter, r *http.Request) {
-}
