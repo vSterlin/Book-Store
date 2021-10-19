@@ -6,9 +6,10 @@ import (
 	"github.com/vSterlin/bookstore/internal/entity"
 )
 
-var books = []*entity.Book{
-	{Id: 1, Author: "Aldous Huxley", Title: "Brave New World", Pages: 311, PublishDate: "1932"},
-}
+const (
+	GetManySQL = "SELECT id, title, author, pages, publish_date  FROM books;"
+	GetOneSQL  = "SELECT id, title, author, pages, publish_date FROM books WHERE id = $1;"
+)
 
 type BookRepo struct {
 	db *sql.DB
@@ -20,7 +21,7 @@ func NewBookRepo(db *sql.DB) *BookRepo {
 
 func (br *BookRepo) GetMany() []*entity.Book {
 
-	rows, _ := br.db.Query("SELECT id, title, author, pages, publish_date  FROM books;")
+	rows, _ := br.db.Query(GetManySQL)
 	books := []*entity.Book{}
 
 	for rows.Next() {
@@ -34,6 +35,6 @@ func (br *BookRepo) GetMany() []*entity.Book {
 
 func (br *BookRepo) GetOne(id int) *entity.Book {
 	book := &entity.Book{}
-	br.db.QueryRow("SELECT id, title, author, pages, publish_date FROM books WHERE id = $1;", id).Scan(&book.Id, &book.Title, &book.Author, &book.Pages, &book.PublishDate)
+	br.db.QueryRow(GetOneSQL, id).Scan(&book.Id, &book.Title, &book.Author, &book.Pages, &book.PublishDate)
 	return book
 }
