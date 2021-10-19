@@ -1,4 +1,4 @@
-package controller
+package book
 
 import (
 	"encoding/json"
@@ -7,14 +7,13 @@ import (
 	"strconv"
 
 	"github.com/go-chi/chi"
-	"github.com/vSterlin/bookstore/internal/service"
 )
 
 type BookController struct {
-	bs *service.BookService
+	bs *BookService
 }
 
-func NewBookController(bs *service.BookService) *BookController {
+func NewBookController(bs *BookService) *BookController {
 	return &BookController{bs: bs}
 }
 

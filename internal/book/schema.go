@@ -1,4 +1,4 @@
-package schema
+package book
 
 const BookSchema = `
 CREATE TABLE books (
