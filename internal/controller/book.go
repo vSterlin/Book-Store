@@ -6,16 +6,20 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/vSterlin/bookstore/service"
+	"github.com/go-chi/chi"
+	"github.com/vSterlin/bookstore/internal/service"
 )
 
 type BookController struct {
-	Bs *service.BookService
+	bs *service.BookService
+}
+
+func NewBookController(bs *service.BookService) *BookController {
+	return &BookController{bs: bs}
 }
 
 func (bc *BookController) GetBooks(w http.ResponseWriter, r *http.Request) {
-	books := bc.Bs.GetMany()
+	books := bc.bs.GetMany()
 	json.NewEncoder(w).Encode(books)
 }
 
@@ -28,7 +32,7 @@ func (bc *BookController) GetBook(w http.ResponseWriter, r *http.Request) {
 		//TODO
 	}
 
-	book := bc.Bs.GetOne(id)
+	book := bc.bs.GetOne(id)
 
 	json.NewEncoder(w).Encode(book)
 
