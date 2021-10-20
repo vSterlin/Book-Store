@@ -1,36 +1,31 @@
-package controller
+package book
 
 import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	_ "github.com/mattn/go-sqlite3"
-
-	"github.com/vSterlin/bookstore/internal/entity"
-	"github.com/vSterlin/bookstore/internal/service"
 )
 
 type mockBookRepo struct{}
 
-var mockBooks = []*entity.Book{
+var mockBooks = []*Book{
 	{Id: 1, Author: "Aldous Huxley", Title: "Brave New World", Pages: 311, PublishDate: "1932"},
 	{Id: 2, Author: "George Orwell", Title: "1984", Pages: 328, PublishDate: "1949"},
 }
 
-func (m *mockBookRepo) GetMany() []*entity.Book {
+func (m *mockBookRepo) GetMany() []*Book {
 	return mockBooks
 }
 
-func (m *mockBookRepo) GetOne(id int) *entity.Book {
+func (m *mockBookRepo) GetOne(id int) *Book {
 	return mockBooks[id-1]
 }
 
-func TestGetController(t *testing.T) {
+func TestGetManyController(t *testing.T) {
 
 	br := &mockBookRepo{}
-	bs := service.NewBookService(br)
+	bs := NewBookService(br)
 	bc := NewBookController(bs)
 
 	req := httptest.NewRequest(http.MethodGet, "/books", nil)
@@ -39,7 +34,7 @@ func TestGetController(t *testing.T) {
 	res := w.Result()
 	defer res.Body.Close()
 
-	books := []*entity.Book{}
+	books := []*Book{}
 
 	json.NewDecoder(res.Body).Decode(&books)
 
@@ -50,4 +45,8 @@ func TestGetController(t *testing.T) {
 	if len(books) != len(mockBooks) {
 		t.Errorf("Expected length of response to be %d, got %d instead\n", len(mockBooks), len(books))
 	}
+}
+
+func TestGetOneController(t *testing.T) {
+
 }
