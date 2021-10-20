@@ -1,4 +1,4 @@
-package apiserver
+package server
 
 import (
 	"database/sql"
@@ -30,6 +30,7 @@ func (s *Server) Init() {
 	bc := book.NewBookController(bs)
 
 	r := chi.NewRouter()
+
 	r.Use(middleware.Logger)
 
 	r.Route("/books", func(r chi.Router) {

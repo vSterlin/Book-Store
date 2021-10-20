@@ -6,7 +6,7 @@ import (
 
 	_ "github.com/lib/pq"
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/vSterlin/bookstore/internal/apiserver"
+	"github.com/vSterlin/bookstore/internal/server"
 )
 
 func main() {
@@ -16,7 +16,8 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	s := apiserver.NewServer(8080, db)
+
+	s := server.NewServer(8080, db)
 	s.Init()
 	defer s.Shutdown()
 }
