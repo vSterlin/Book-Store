@@ -22,7 +22,7 @@ func (m *mockBookRepo) GetOne(id int) *Book {
 	return mockBooks[id-1]
 }
 
-func TestGetController(t *testing.T) {
+func TestGetManyController(t *testing.T) {
 
 	br := &mockBookRepo{}
 	bs := NewBookService(br)
@@ -45,4 +45,8 @@ func TestGetController(t *testing.T) {
 	if len(books) != len(mockBooks) {
 		t.Errorf("Expected length of response to be %d, got %d instead\n", len(mockBooks), len(books))
 	}
+}
+
+func TestGetOneController(t *testing.T) {
+
 }

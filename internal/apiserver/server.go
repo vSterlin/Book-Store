@@ -7,9 +7,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/vSterlin/bookstore/internal/controller"
-	"github.com/vSterlin/bookstore/internal/repository"
-	"github.com/vSterlin/bookstore/internal/service"
+	"github.com/vSterlin/bookstore/internal/book"
 )
 
 type Server struct {
@@ -27,9 +25,9 @@ func NewServer(addr int, db *sql.DB) *Server {
 func (s *Server) Init() {
 	s.db.Ping()
 
-	br := repository.NewBookRepo(s.db)
-	bs := service.NewBookService(br)
-	bc := controller.NewBookController(bs)
+	br := book.NewBookRepo(s.db)
+	bs := book.NewBookService(br)
+	bc := book.NewBookController(bs)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
